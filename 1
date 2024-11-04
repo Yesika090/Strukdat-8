@@ -1,0 +1,56 @@
+class Resto:
+    def __init__(self):
+        self.queue = []
+
+    def add(self, item, priority):
+        # Menambahkan item dengan prioritas tertentu
+        self.queue.append((priority, item))
+        # Mengurutkan queue berdasarkan prioritas (ascending)
+        self.queue.sort(key=lambda x: x[0])
+
+    def change_priority(self, item, new_priority):
+        # Mengubah prioritas dari item yang sesuai
+        for i in range(len(self.queue)):
+            if self.queue[i][1] == item:
+                self.queue[i] = (new_priority, item)
+                break
+        # Mengurutkan ulang queue setelah prioritas diubah
+        self.queue.sort(key=lambda x: x[0])
+
+    def remove_highest_priority(self):
+        # Menghapus data dengan prioritas tertinggi (yang paling depan dalam antrian)
+        if self.queue:
+            self.queue.pop(0)
+
+    def remove_with_priority(self, priority):
+        # Menghapus semua data dengan prioritas tertentu
+        self.queue = [item for item in self.queue if item[0] != priority]
+
+    def display(self):
+        # Menampilkan isi antrian
+        for priority, item in self.queue:
+            print(f"Priority: {priority}, Item: {item}")
+
+# Test Case
+if __name__ == "__main__":
+    antrian = Resto()
+
+    antrian.add("Pesan Pizza", 2)
+    antrian.add("Pesan Ayam Goreng", 1)
+    antrian.add("Pesan Burger", 3)
+
+    print("Isi awal Pesanan:")
+    antrian.display()
+
+    print("\nPesanan Ayam Goreng diminta cepat!!!")
+    antrian.change_priority("Pesan Ayam Goreng", 4)
+    antrian.display()
+
+    print("\n##### PESANAN PERTAMA SUDAH SELESAI #####\n")
+    antrian.remove_highest_priority()
+    print("Sisa pesanan:")
+    antrian.display()
+
+    print("\nPesanan dengan prioritas ini telah selesai")
+    antrian.remove_with_priority(2)
+    antrian.display()
